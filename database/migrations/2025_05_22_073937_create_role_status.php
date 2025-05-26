@@ -13,12 +13,10 @@ return new class extends Migration
     {
         Schema::create('role_status', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id');
             $table->string('role_name'); // e.g., admin, officer, driver, etc.
             $table->timestamps();
 
-            // Foreign key constraint
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            // Foreign key constraint          
         });
     }
 

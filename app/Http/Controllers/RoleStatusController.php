@@ -46,22 +46,22 @@ class RoleStatusController extends Controller
     /**
      * Update the specified role status.
      */
-    public function update(Request $request, $id)
-    {
-        $roleStatus = RoleStatus::findOrFail($id);
+    // public function update(Request $request, $id)
+    // {
+    //     $roleStatus = RoleStatus::findOrFail($id);
 
-        $validated = $request->validate([
-            'user_id' => 'sometimes|exists:users,id',
-            'role_name' => 'sometimes|string|max:255',
-        ]);
+    //     $validated = $request->validate([
+    //         'user_id' => 'sometimes|exists:users,id',
+    //         'role_name' => 'sometimes|string|max:255',
+    //     ]);
 
-        $roleStatus->update($validated);
+    //     $roleStatus->update($validated);
 
-        return response()->json([
-            'message' => 'Role status updated successfully',
-            'role_status' => $roleStatus,
-        ]);
-    }
+    //     return response()->json([
+    //         'message' => 'Role status updated successfully',
+    //         'role_status' => $roleStatus,
+    //     ]);
+    // }
 
     /**
      * Remove the specified role status.

@@ -40,4 +40,39 @@ class AuthenticationController extends Controller
             'user' => $user,
         ], 201);
     }
+    public function login(Request $request)
+    {
+        $request->validate([
+            'gmail'    => ['required', 'email'],
+            'password' => ['required', 'string'],
+        ]);
+
+        $user = User::where('gmail', $request->gmail)->first();
+
+        if (!$user || !Hash::check($request->password, $user->password)) {
+            return response()->json([
+                'message' => 'Invalid credentials'
+            ], 401);
+        }
+
+        // Generate token using Laravel Sanctum
+        $token = $user->createToken('auth_token')->plainTextToken;
+
+        return response()->json([
+            'message' => 'Login successful',
+            'token'   => $token,
+            'user'    => $user->makeHidden(['password']),
+        ]);
+    }
+
+    public function logout(Request $request)
+    {
+        // Revoke the current token
+        $request->user()->currentAccessToken()->delete();
+
+        return response()->json([
+            'message' => 'Logged out successfully',
+        ]);
+    }
+
 }
